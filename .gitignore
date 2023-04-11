@@ -1,5 +1,5 @@
 params.h
-
+*.log
 
 # Prerequisites
 *.d
