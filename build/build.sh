@@ -1,5 +1,12 @@
 #!/bin/bash
 
+FLAG="${1:-normal}"
+
+if [ "$FLAG" == "debug" ]; then
+    cat /build/template.tex
+    exit 0
+fi
+
 if [ ! -d /output ]; then
     echo "Output directory does not exist! Bind mount a directory to /output"
     exit 1
