@@ -15,4 +15,13 @@ fi
 # Do whatever replacements in 'template.tex' to add content
 
 pdflatex -interaction=nonstopmode /build/template.tex
-convert /build/template.pdf  -depth 1 -monochrome -resize 1200x  BMP3:/output/output.bmp
+
+cp /build/template.pdf /output/output.pdf
+
+# convert /output/output.pdf -quality 200 -rotate -90 -resize 1200x825 /output/output.png
+
+# -resize x825
+convert /output/output.pdf  -quality 100 -rotate -90 -depth 1 /output/output.bmp
+
+# Convert to 1 bit depth
+# convert /output/tmp.bmp -depth 1 /output/output.bmp
