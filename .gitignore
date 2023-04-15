@@ -1,4 +1,6 @@
 params.h
+*.bmp
+*.pdf
 *.log
 
 # Prerequisites
