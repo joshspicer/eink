@@ -1,6 +1,6 @@
 #!/bin/bash
 
-FLAG="${1:-normal}"
+FLAG="${1:-newspaper}"
 
 if [ "$FLAG" == "debug" ]; then
     cat /build/template.tex
@@ -12,16 +12,20 @@ if [ ! -d /output ]; then
     exit 1
 fi
 
-# Do whatever replacements in 'template.tex' to add content
+if [ "$FLAG" == "newspaper" ]; then
+    # Do whatever replacements in 'template.tex' to add content
+    # ...
+    # ...
 
-pdflatex -interaction=nonstopmode /build/template.tex
+    pdflatex -interaction=nonstopmode /build/template.tex
+    cp /build/template.pdf /output/output.pdf
+    convert /output/output.pdf  -quality 100 -rotate -90 -depth 1 /output/output.bmp
 
-cp /build/template.pdf /output/output.pdf
+    # -resize x825
+    # convert /output/output.pdf -quality 200 -rotate -90 -resize 1200x825 /output/output.png
+    # convert /output/tmp.bmp -depth 1 /output/output.bmp
+fi
 
-# convert /output/output.pdf -quality 200 -rotate -90 -resize 1200x825 /output/output.png
-
-# -resize x825
-convert /output/output.pdf  -quality 100 -rotate -90 -depth 1 /output/output.bmp
-
-# Convert to 1 bit depth
-# convert /output/tmp.bmp -depth 1 /output/output.bmp
+if [ "$FLAG" == "image" ]; then
+    # TODO
+fi
