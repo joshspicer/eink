@@ -1,0 +1,24 @@
+name: Build Image
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  push-docker-image:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      run: docker build ./build -t eink-today:latest
+    - name: Log in to registry
+      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u USERNAME --password-stdin
+    - name: Push image
+      run: |
+        REMOTE_NAME="ghcr.io/${{ github.repository_owner }}/eink-today:latest"
+        docker tag eink-today:latest $REMOTE_NAME
+        docker push $REMOTE_NAME
