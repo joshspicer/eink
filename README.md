@@ -2,7 +2,7 @@
 
 ## Server
 
-```bash
+```
 $ docker build ./server -t eink
 
 $ docker run --rm eink
@@ -16,6 +16,8 @@ $ wget localhost:3000/newspaper.bmp
 ```
 
 ## Client sketch
+
+> See _https://github.com/SolderedElectronics/Inkplate-Arduino-library_
 
 ### Setup
 ```
@@ -77,4 +79,8 @@ Used platform         Version Path
 Inkplate_Boards:esp32 7.1.0   /home/josh/.arduino15/packages/Inkplate_Boards/hardware/esp32/7.1.0
 ```
 
-> See _https://github.com/SolderedElectronics/Inkplate-Arduino-library_
+### Upload
+
+```
+arduino-cli upload -b Inkplate_Boards:esp32:Inkplate10 -p /dev/ttyUSB0
+```
