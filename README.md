@@ -1,7 +1,20 @@
-- https://github.com/SolderedElectronics/Inkplate-Arduino-library
+# eink
+
+## Server
 
 ```bash
-docker build ./newspaper_article_builder -t eink-today
+$ docker build ./server -t eink
 
-docker run --rm -v /workspaces/eink/:/output  eink-today
+$ docker run --rm eink
+
+Starting...
+Server listening on port 3000!
+
+$ curl localhost:3000/update
+
+$ wget localhost:3000/newspaper.bmp
 ```
+
+## Client sketch
+
+> See _https://github.com/SolderedElectronics/Inkplate-Arduino-library_
