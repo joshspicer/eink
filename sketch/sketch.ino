@@ -30,12 +30,20 @@ Inkplate display(INKPLATE_3BIT); // Create an object on Inkplate library and als
 
 void setup()
 {
-    display.begin();        // Init Inkplate library (you should call this function ONLY ONCE)
+    Serial.begin(115200); // Init serial port
+    Serial.println("Starting!");
+
+    display.begin(); // Init Inkplate library (you should call this function ONLY ONCE)
+
+    Serial.println("Display started!");
+
     display.clearDisplay(); // Clear frame buffer of display
     display.display();      // Put clear image on display
 
     display.print("Connecting to WiFi...");
     display.partialUpdate();
+
+    Serial.println("Connecting to WiFi...");
 
     // Connect to the WiFi network.
     WiFi.mode(WIFI_MODE_STA);
@@ -44,17 +52,18 @@ void setup()
     {
         delay(500);
         display.print(".");
+        Serial.println("(waiting for connection)");
         display.partialUpdate();
     }
+
+    Serial.println("Connected to WiFi!");
+
+    // Print IP address
+    Serial.println(WiFi.localIP());
+
     // Craft bitmap URL
     char bitmapUrl[100];
-    sprintf(bitmapUrl, "%s/image.bmp", baseAddress);
-
-    char debugString[100];
-    sprintf(debugString, "Connected to WiFi. Downloading from '%s'...", bitmapUrl);
-
-    display.println(debugString);
-    display.partialUpdate();
+    sprintf(bitmapUrl, "%s/newspaper.bmp", baseAddress);
 
     // Draw the first image from web.
     // Monochromatic bitmap with 1 bit depth. Images like this load quickest.
@@ -71,7 +80,6 @@ void setup()
     display.display();
     WiFi.mode(WIFI_OFF);
 }
-
 
 void loop()
 {
