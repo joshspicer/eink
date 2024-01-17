@@ -26,6 +26,6 @@ if [ "$FLAG" == "newspaper" ]; then
     # convert /output/tmp.bmp -depth 1 /output/output.bmp
 fi
 
-if [ "$FLAG" == "image" ]; then
+# if [ "$FLAG" == "image" ]; then
     # TODO
-fi
+# fi

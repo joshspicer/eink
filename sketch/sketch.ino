@@ -21,14 +21,12 @@
 #error "Wrong board selection for this example, please select e-radionica Inkplate10 or Soldered Inkplate10 in the boards menu."
 #endif
 
-#include "HTTPClient.h"          //Include library for HTTPClient
-#include "Inkplate.h"            //Include Inkplate library to the sketch
-#include "WiFi.h"                //Include library for WiFi
+#include "params.h"              // ssid, password, baseAddress
+#include "HTTPClient.h"          // Include library for HTTPClient
+#include "Inkplate.h"            // Include Inkplate library to the sketch
+#include "WiFi.h"                // Include library for WiFi
+#include <stdio.h>               // Include standard C library
 Inkplate display(INKPLATE_3BIT); // Create an object on Inkplate library and also set library into 1 Bit mode (BW)
-
-const char ssid[] = "YOUR_SSID";         // Your WiFi SSID
-const char *password = "YOUR_PASSWORD"; // Your WiFi password
-
 
 void setup()
 {
@@ -48,7 +46,14 @@ void setup()
         display.print(".");
         display.partialUpdate();
     }
-    display.println("\nWiFi OK! Downloading...");
+    // Craft bitmap URL
+    char bitmapUrl[100];
+    sprintf(bitmapUrl, "%s/image.bmp", baseAddress);
+
+    char debugString[100];
+    sprintf(debugString, "Connected to WiFi. Downloading from '%s'...", bitmapUrl);
+
+    display.println(debugString);
     display.partialUpdate();
 
     // Draw the first image from web.
@@ -56,7 +61,7 @@ void setup()
     // NOTE: Both drawImage methods allow for an optional fifth "invert" parameter. Setting this parameter to true
     // will flip all colors on the image, making black white and white black. This may be necessary when exporting
     // bitmaps from certain softwares. Forth parameter will dither the image.
-    if (!display.drawImage("http://YOUR_IP/today.bmp", 0, 0, false, false))
+    if (!display.drawImage(bitmapUrl, 0, 0, false, false))
     {
         // If is something failed (wrong filename or wrong bitmap format), write error message on the screen.
         // REMEMBER! You can only use Windows Bitmap file with color depth of 1, 4, 8 or 24 bits with no compression!
