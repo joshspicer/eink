@@ -28,6 +28,9 @@
 #include <stdio.h>               // Include standard C library
 Inkplate display(INKPLATE_3BIT); // Create an object on Inkplate library and also set library into 1 Bit mode (BW)
 
+#define uS_TO_S_FACTOR 1000000      // Conversion factor for micro seconds to seconds
+#define SECONDS_TO_SLEEP  20        // How long ESP32 will be in deep sleep (in seconds)
+
 void setup()
 {
     display.begin();        // Init Inkplate library (you should call this function ONLY ONCE)
@@ -70,6 +73,9 @@ void setup()
     }
     display.display();
     WiFi.mode(WIFI_OFF);
+
+    esp_sleep_enable_timer_wakeup(SECONDS_TO_SLEEP * uS_TO_S_FACTOR);   // Activate wake-up timer
+    esp_deep_sleep_start();                                             // Go to sleep now
 }
 
 
