@@ -43,8 +43,22 @@ e-radionica.com Inkplate6      Inkplate_Boards:esp32:Inkplate6        Inkplate_B
 $ cd ./sketch \
   && python -m venv . \
   && source bin/activate \
-  && pip install pyserial
+  && pip install pyserial==3.3
+```
 
+### Compile for your board
+
+#### `params.h`
+
+Create a `sketch/params.h` file similar to below.
+
+```c++
+const char *ssid = "mywifi";
+const char *password = "mypass";
+const char *baseAddress = "http://10.0.0.1:3000";
+```
+
+```
 (venv) $ arduino-cli compile -b Inkplate_Boards:esp32:Inkplate10
 
 Sketch uses 939357 bytes (29%) of program storage space. Maximum is 3145728 bytes.
@@ -61,7 +75,6 @@ EEPROM           2.0.0   /home/josh/.arduino15/packages/Inkplate_Boards/hardware
 
 Used platform         Version Path                                                               
 Inkplate_Boards:esp32 7.1.0   /home/josh/.arduino15/packages/Inkplate_Boards/hardware/esp32/7.1.0
-
 ```
 
 > See _https://github.com/SolderedElectronics/Inkplate-Arduino-library_
