@@ -3,6 +3,7 @@ const morgan = require('morgan');
 const serveStatic = require('serve-static');
 
 const port = parseInt(process.env.PORT) || 3000;
+const debug = process.env.DEBUG || false;
 
 console.log("Starting...")
 
@@ -11,29 +12,31 @@ process.on('SIGINT', function() {
     process.exit();
 });
 
-const updateNewspaper = (req, res, next) => {
+const updateNewspaper = (req, res) => {
     const { exec } = require('child_process');
-    const child = exec('/opt/build.sh newspaper', (error, stdout, stderr) => {
+    exec('/opt/build.sh newspaper', (error, stdout, stderr) => {
 
-        console.log(`stdout: ${stdout}`);
-        console.error(`stderr: ${stderr}`);
+        if (debug || error) {
+            console.log(`stdout: ${stdout}`);
+            console.error(`stderr: ${stderr}`);
+        }
 
         if (error) {
             console.error(`exec error: ${error}`);
-            res.status(500);
-            return next();
+            res.sendStatus(500);
+        } else {
+            res.sendStatus(202);
         }
-
-        res.status(200);
-        next();
     });
 }
 
 const app = express();
-
-app.get('/update', updateNewspaper);
+app.use(morgan('combined'));
 app.use(serveStatic('/usr/src/app/static'));
 
-app.use(morgan('combined'));
+app.get('/update', updateNewspaper);
+
+// Use serve static, and also always call next() to allow morgan to log
+
 app.listen(port, () => console.log(`Server listening on port ${port}!`));
  
