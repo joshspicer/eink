@@ -3,6 +3,12 @@ params.h
 *.pdf
 *.log
 
+# python venv
+sketch/bin
+sketch/lib
+sketch/lib64
+sketch/pyvenv.cfg
+
 # Prerequisites
 *.d
 
