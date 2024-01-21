@@ -1,23 +1,65 @@
 #!/bin/bash
 
-set -e
+set -ex
 
 FLAG="$1"
+JSON_DATA="$2" # Optional
+
+DESTINATION_PATH='/usr/src/app/static/image.bmp'
 
 if [ -z "$FLAG" ]; then
     echo "No flag provided"
     exit 1
 fi
 
+if [ -z "$JSON_DATA" ]; then
+    echo "No JSON data provided"
+    exit 1
+fi
+
+set +e
+rm -rf /output
+mkdir /output 
+set -e
+
+cd /output
+
 if [ "$FLAG" == "newspaper" ]; then
-    # Do whatever replacements in 'template.tex' to add content
-    # ...
-    # ...
+    cp -r /template/* /output
+    
+    # Loop through all the headers and replace the markers
+    for i in {1..3}
+    do
+        header=$(echo "$JSON_DATA" | jq -r ".header$i")
+        marker="%%%%<header$i>%%%%"
+        sed -i "s/$marker/$header/g" /output/template.tex
+    done
 
-    cd /build
-    pdflatex -interaction=nonstopmode /build/template.tex
-    cp /build/template.pdf /output/output.pdf
-    convert /output/output.pdf  -quality 100 -rotate -90 -depth 1 /output/output.bmp
+    # Loop through all the data and replace the markers
+    for i in {1..3}
+    do
+        data=$(echo "$JSON_DATA" | jq -r ".data$i")
+        marker="%%%%<data$i>%%%%"
+        sed -i "s/$marker/$data/g" /output/template.tex
+    done
 
-    cp /output/output.bmp /usr/src/app/static/newspaper.bmp
+    pdflatex -interaction=nonstopmode /output/template.tex
+    convert /output/template.pdf  -quality 100 -rotate -90 -depth 1 /output/output.bmp
+    cp /output/output.bmp $DESTINATION_PATH
+fi
+
+if [ "$FLAG" == "web" ]; then
+    # Extract image extension from URL
+
+    TARGET_URL=$(echo "$JSON_DATA" | jq -r '.url')
+
+    ext="${TARGET_URL##*.}"
+
+    # Download image from URL temporarily
+    wget -O /output/target.$ext $TARGET_URL
+
+    # Convert to bmp
+    convert /output/target.$ext -rotate -90 -depth 1 /output/output.bmp
+
+    cp /output/output.bmp $DESTINATION_PATH
 fi

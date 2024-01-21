@@ -2,17 +2,20 @@
 
 ## Server
 
-```
+```bash
 $ docker build ./server -t eink
 
-$ docker run --rm eink
+$ docker run --rm -p 3000:3000 eink
 
 Starting...
 Server listening on port 3000!
 
-$ curl localhost:3000/update
+# See more in server/examples
+$ curl -X PATCH \ 
+    -d '{\"data1\": \"hello there it is me josh\"}' \
+    http://localhost:3000/update?mode=newspaper
 
-$ wget localhost:3000/newspaper.bmp
+$ wget localhost:3000/image.bmp
 ```
 
 ## Client sketch
@@ -20,7 +23,11 @@ $ wget localhost:3000/newspaper.bmp
 > See _https://github.com/SolderedElectronics/Inkplate-Arduino-library_
 
 ### Setup
-```
+```bash
+curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | BINDIR=/bin sh
+
+$ arduino-cli config init
+
 $ arduino-cli config add board_manager.additional_urls  https://github.com/SolderedElectronics/Dasduino-Board-Definitions-for-Arduino-IDE/raw/master/package_Dasduino_Boards_index.json
 $ arduino-cli update
 
@@ -60,7 +67,7 @@ const char *password = "mypass";
 const char *baseAddress = "http://10.0.0.1:3000";
 ```
 
-```
+```bash
 (venv) $ arduino-cli compile -b Inkplate_Boards:esp32:Inkplate10
 
 Sketch uses 939357 bytes (29%) of program storage space. Maximum is 3145728 bytes.
@@ -81,6 +88,6 @@ Inkplate_Boards:esp32 7.1.0   /home/josh/.arduino15/packages/Inkplate_Boards/har
 
 ### Upload
 
-```
+```bash
 arduino-cli upload -b Inkplate_Boards:esp32:Inkplate10 -p /dev/ttyUSB0
 ```

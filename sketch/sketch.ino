@@ -28,8 +28,10 @@
 #include <stdio.h>               // Include standard C library
 Inkplate display(INKPLATE_3BIT); // Create an object on Inkplate library and also set library into 1 Bit mode (BW)
 
-#define uS_TO_S_FACTOR 1000000      // Conversion factor for micro seconds to seconds
-#define SECONDS_TO_SLEEP  20        // How long ESP32 will be in deep sleep (in seconds)
+#define uS_TO_S_FACTOR 1000000 // Conversion factor for micro seconds to seconds
+
+#define SUCCESS_SECONDS_TO_SLEEP 20 //  6*60*60 // How long ESP32 will be in deep sleep (in seconds)
+#define FAIL_SECONDS_TO_SLEEP 60    // How long ESP32 will be in deep sleep (in seconds)
 
 void setup()
 {
@@ -37,36 +39,61 @@ void setup()
     Serial.println("Starting!");
 
     display.begin(); // Init Inkplate library (you should call this function ONLY ONCE)
-
     Serial.println("Display started!");
 
     display.clearDisplay(); // Clear frame buffer of display
     display.display();      // Put clear image on display
 
-    display.print("Connecting to WiFi...");
-    display.partialUpdate();
-
-    Serial.println("Connecting to WiFi...");
-
-    // Connect to the WiFi network.
-    WiFi.mode(WIFI_MODE_STA);
-    WiFi.begin(ssid, password);
-    while (WiFi.status() != WL_CONNECTED)
+    if (!connectToWifi())
     {
-        delay(500);
-        display.print(".");
-        Serial.println("(waiting for connection)");
-        display.partialUpdate();
+        Serial.println("Failed to connect to WiFi");
+        tryAgainSoon();
     }
-
-    Serial.println("Connected to WiFi!");
 
     // Print IP address
     Serial.println(WiFi.localIP());
 
+    if (!downloadAndShowImage())
+    {
+        Serial.println("Failed to download and show image");
+        tryAgainSoon();
+    }
+
+    doDeepSleep();
+}
+
+bool connectToWifi()
+{
+    // Connect to the WiFi network.
+    Serial.println("Connecting to WiFi...");
+    WiFi.mode(WIFI_MODE_STA);
+    WiFi.begin(ssid, password);
+
+    int timerMs = 0;
+    int timeoutMs = 60000;
+    int delayMs = 500;
+
+    while (WiFi.status() != WL_CONNECTED)
+    {
+        if (timerMs >= timeoutMs)
+        {
+            Serial.println("WiFi timeout, could not connect.");
+            return false;
+        }
+
+        delay(delayMs);
+        Serial.println(".");
+        timerMs += delayMs;
+    }
+
+    return true;
+}
+
+bool downloadAndShowImage()
+{
     // Craft bitmap URL
     char bitmapUrl[100];
-    sprintf(bitmapUrl, "%s/newspaper.bmp", baseAddress);
+    sprintf(bitmapUrl, "%s/image.bmp", baseAddress);
 
     // Draw the first image from web.
     // Monochromatic bitmap with 1 bit depth. Images like this load quickest.
@@ -77,14 +104,38 @@ void setup()
     {
         // If is something failed (wrong filename or wrong bitmap format), write error message on the screen.
         // REMEMBER! You can only use Windows Bitmap file with color depth of 1, 4, 8 or 24 bits with no compression!
-        display.println("Image open error");
-        display.display();
+        return false;
     }
     display.display();
+    return true;
+}
+
+bool doDeepSleep()
+{
+    Serial.println("SUCCESS! Going to sleep...");   
+
+    // Turn off WiFi
     WiFi.mode(WIFI_OFF);
 
-    esp_sleep_enable_timer_wakeup(SECONDS_TO_SLEEP * uS_TO_S_FACTOR);   // Activate wake-up timer
-    esp_deep_sleep_start();                                             // Go to sleep now
+    // Set timer to wake up after 6 hours
+    esp_sleep_enable_timer_wakeup(SUCCESS_SECONDS_TO_SLEEP * uS_TO_S_FACTOR);
+
+    // Go to sleep now
+    esp_deep_sleep_start();
+}
+
+bool tryAgainSoon()
+{
+    Serial.println("ERROR! Trying again soon...");
+
+    // Turn off WiFi
+    WiFi.mode(WIFI_OFF);
+
+    // Set timer to wake up after 6 hours
+    esp_sleep_enable_timer_wakeup(FAIL_SECONDS_TO_SLEEP * uS_TO_S_FACTOR);
+
+    // Go to sleep now
+    esp_deep_sleep_start();
 }
 
 void loop()

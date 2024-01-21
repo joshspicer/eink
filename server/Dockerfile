@@ -1,6 +1,6 @@
 FROM dpokidov/imagemagick:latest-bullseye
 
-WORKDIR /build
+WORKDIR /template
 
 # Modified from https://github.com/sphinx-doc/sphinx-docker-images/blob/master/latexpdf/Dockerfile
 RUN apt-get update -y \
@@ -9,6 +9,8 @@ RUN apt-get update -y \
       imagemagick \
       make \
       curl \
+      wget \
+      jq   \
       \ 
       latexmk \
       lmodern \
