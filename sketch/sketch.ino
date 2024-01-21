@@ -30,7 +30,7 @@ Inkplate display(INKPLATE_3BIT); // Create an object on Inkplate library and als
 
 #define uS_TO_S_FACTOR 1000000 // Conversion factor for micro seconds to seconds
 
-#define SUCCESS_SECONDS_TO_SLEEP 20 //  6*60*60 // How long ESP32 will be in deep sleep (in seconds)
+#define SUCCESS_SECONDS_TO_SLEEP 6*60*60 // How long ESP32 will be in deep sleep (in seconds)
 #define FAIL_SECONDS_TO_SLEEP 60    // How long ESP32 will be in deep sleep (in seconds)
 
 void setup()
