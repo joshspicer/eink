@@ -43,6 +43,10 @@ if [ "$FLAG" == "newspaper" ]; then
         sed -i "s/$marker/$data/g" /output/template.tex
     done
 
+    # Update other variables
+    fontsize=$(echo "$JSON_DATA" | jq -r ".fontsize")
+    sed -i "s/%%%%<fontsize>%%%%/$fontsize/g" /output/template.tex
+
     pdflatex -interaction=nonstopmode /output/template.tex
     convert /output/template.pdf  -quality 100 -rotate -90 -depth 1 /output/output.bmp
     cp /output/output.bmp $DESTINATION_PATH
