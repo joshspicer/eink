@@ -25,7 +25,7 @@ set -e
 cd /output
 
 if [ "$FLAG" == "newspaper" ]; then
-    cp -r /template/* /output
+    cp -r /templates/newspaper* /output
     
     # Loop through all the headers and replace the markers
     for i in {1..3}
@@ -46,6 +46,16 @@ if [ "$FLAG" == "newspaper" ]; then
     # Update other variables
     fontsize=$(echo "$JSON_DATA" | jq -r ".fontsize")
     sed -i "s/%%%%<fontsize>%%%%/$fontsize/g" /output/template.tex
+
+    pdflatex -interaction=nonstopmode /output/template.tex
+    convert /output/template.pdf  -quality 100 -rotate -90 -depth 1 /output/output.bmp
+    cp /output/output.bmp $DESTINATION_PATH
+fi
+
+if [ "$FLAG" == "recipe" ]; then
+    cp -r /templates/newspaper* /output
+    
+    # TODO: Replacements
 
     pdflatex -interaction=nonstopmode /output/template.tex
     convert /output/template.pdf  -quality 100 -rotate -90 -depth 1 /output/output.bmp

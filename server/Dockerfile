@@ -41,8 +41,8 @@ RUN python3 -m pip install --no-cache-dir -U pip
 RUN python3 -m pip install --no-cache-dir Sphinx==5.3.0 Pillow
 
 # Copy newspaper template over to workdir
-RUN rm -rf ./template
-ADD template .
+RUN rm -rf ./templates
+ADD templates .
 
 COPY build.sh /opt/build.sh
 RUN chmod +x /opt/build.sh
