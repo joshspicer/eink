@@ -1,6 +1,6 @@
 FROM dpokidov/imagemagick:latest-bullseye
 
-WORKDIR /template
+WORKDIR /templates
 
 # Modified from https://github.com/sphinx-doc/sphinx-docker-images/blob/master/latexpdf/Dockerfile
 RUN apt-get update -y \

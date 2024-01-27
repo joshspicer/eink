@@ -8,13 +8,12 @@ JSON_DATA="$2" # Optional
 DESTINATION_PATH='/usr/src/app/static/image.bmp'
 
 if [ -z "$FLAG" ]; then
-    echo "No flag provided"
+    echo "ERR: No flag provided"
     exit 1
 fi
 
 if [ -z "$JSON_DATA" ]; then
-    echo "No JSON data provided"
-    exit 1
+    echo "WARN: No JSON data provided"
 fi
 
 set +e
@@ -25,7 +24,7 @@ set -e
 cd /output
 
 if [ "$FLAG" == "newspaper" ]; then
-    cp -r /templates/newspaper* /output
+    cp -r /templates/newspaper/* /output
     
     # Loop through all the headers and replace the markers
     for i in {1..3}
@@ -53,7 +52,7 @@ if [ "$FLAG" == "newspaper" ]; then
 fi
 
 if [ "$FLAG" == "recipe" ]; then
-    cp -r /templates/newspaper* /output
+    cp -r /templates/recipe/* /output
     
     # TODO: Replacements
 
