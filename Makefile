@@ -21,7 +21,7 @@ newspaper:
 	curl -X PATCH -d '{\"data1\": \"hello there it is me josh\"}' $(SERVER)/update?mode=newspaper
 
 recipe:
-	curl -X PATCH -d '{\"mealQuery\": \"pasta\"}' $(SERVER)/update?mode=recipe
+	curl -X PATCH -d '{\"mealQuery\": \"vegetable soup\"}' $(SERVER)/update?mode=recipe
 
 image:
 	curl -X PATCH -d '{\"url\": \"https://joshspicer.com/assets/me/7.jpg\"}' $(SERVER)/update?mode=image
