@@ -67,7 +67,7 @@ if [ "$FLAG" == "recipe" ]; then
 
     pdflatex -interaction=nonstopmode /output/template.tex
     # Convert to bitmap and resize for inkplate
-    convert /output/template.pdf  -quality 100 -rotate -90 -depth 1 -resize $INKPLATE_WIDTHx$INKPLATE_HEIGHT /output/output.bmp
+    convert /output/template.pdf  -quality 100 -rotate -90 -depth 1 -resize $INKPLATE_HEIGHTx$INKPLATE_WIDTH /output/output.bmp
     cp /output/output.bmp $DESTINATION_PATH
 fi
 
