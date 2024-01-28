@@ -72,7 +72,7 @@ if [ "$FLAG" == "recipe" ]; then
     convert /output/template.pdf -colorspace RGB -trim -quality 100 -rotate -90  /output/output_0.png
     cp /output/output_0.png "${BASE_DESINATION_PATH}/image-trimmed.png"
 
-    convert /output/template.pdf -colorspace RGB-quality 100 -rotate -90  /output/output_1.png
+    convert /output/template.pdf -colorspace RGB -quality 100 -rotate -90  /output/output_1.png
     cp /output/output_1.png "${BASE_DESINATION_PATH}/image.png"
 
     # Jpg
