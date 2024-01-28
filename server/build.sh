@@ -66,9 +66,15 @@ if [ "$FLAG" == "recipe" ]; then
     /output/queryAndReplace.sh "$RECIPE_NAME"
 
     pdflatex -interaction=nonstopmode /output/template.tex
-    # Convert to bitmap and resize for inkplate
-    convert /output/template.pdf  -quality 100 -rotate -90 -depth 1 -resize $INKPLATE_HEIGHTx$INKPLATE_WIDTH /output/output.bmp
+
+    # Convert to a png and resize to fit inkplate
+    convert /output/template.pdf -resize ${INKPLATE_WIDTH}x${INKPLATE_HEIGHT} -quality 100 -rotate -90 /output/output.png
+    cp /output/output.png $DESTINATION_PATH
+
+    # Convert another copy to bitmap
+    convert /output/template.pdf  -quality 100 -rotate -90 -depth 1 /output/output.bmp
     cp /output/output.bmp $DESTINATION_PATH
+
 fi
 
 if [ "$FLAG" == "web" ]; then
