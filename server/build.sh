@@ -69,27 +69,25 @@ if [ "$FLAG" == "recipe" ]; then
     pdflatex -interaction=nonstopmode /output/template.tex
 
     # Png
-    convert /output/template.pdf -trim -quality 100 -rotate -90 /output/output-trimmed.png
-    cp /output/output-trimmed.png "${BASE_DESINATION_PATH}/image-trimmed.png"
+    convert /output/template.pdf -colorspace RGB -trim -quality 100 -rotate -90  /output/output_0.png
+    cp /output/output_0.png "${BASE_DESINATION_PATH}/image-trimmed.png"
 
-    convert /output/template.pdf -quality 100 -rotate -90 /output/output.png
-    cp /output/output.png "${BASE_DESINATION_PATH}/image.png"
+    convert /output/template.pdf -colorspace RGB-quality 100 -rotate -90  /output/output_1.png
+    cp /output/output_1.png "${BASE_DESINATION_PATH}/image.png"
 
     # Jpg
-    convert /output/template.pdf -trim -quality 100 -rotate -90 /output/output-trimmed.jpg
-    cp /output/output-trimmed.jpg "${BASE_DESINATION_PATH}/image-trimmed.jpg"
+    convert /output/template.pdf -trim -quality 100 -rotate -90 /output/output_2.jpg
+    cp /output/output_2.jpg "${BASE_DESINATION_PATH}/image-trimmed.jpg"
 
-    convert /output/template.pdf -quality 100 -rotate -90 /output/output.jpg
-    cp /output/output.jpg "${BASE_DESINATION_PATH}/image.jpg"
+    convert /output/template.pdf -quality 100 -rotate -90 /output/output_3.jpg
+    cp /output/output_3.jpg "${BASE_DESINATION_PATH}/image.jpg"
 
     # Bmp
-    convert /output/template.pdf -trim -quality 100 -rotate -90 -depth 1 /output/output-trimmed.bmp
-    cp /output/output-trimmed.bmp "${BASE_DESINATION_PATH}/image-trimmed.bmp"
+    convert /output/template.pdf -trim -quality 100 -rotate -90 -depth 1 /output/output_4.bmp
+    cp /output/output_4.bmp "${BASE_DESINATION_PATH}/image-trimmed.bmp"
 
-    convert /output/template.pdf  -quality 100 -rotate -90 -depth 1 /output/output.bmp
-    cp /output/output.bmp $BMP_DESTINATION_PATH
-
-
+    convert /output/template.pdf  -quality 100 -rotate -90 -depth 1 /output/output_5.bmp
+    cp /output/output_5.bmp $BMP_DESTINATION_PATH
 fi
 
 if [ "$FLAG" == "web" ]; then

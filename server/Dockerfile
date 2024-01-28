@@ -10,6 +10,7 @@ RUN apt-get update -y \
       make \
       curl \
       wget \
+      vim  \
       jq   \
       \ 
       latexmk \
@@ -44,9 +45,6 @@ RUN python3 -m pip install --no-cache-dir Sphinx==5.3.0 Pillow
 RUN rm -rf ./templates
 ADD templates .
 
-COPY build.sh /opt/build.sh
-RUN chmod +x /opt/build.sh
-
 RUN mkdir /output
 
 WORKDIR /usr/src/app
@@ -55,6 +53,9 @@ RUN mkdir ./static
 RUN npm install
 COPY . .
 EXPOSE 3000
+
+COPY build.sh /opt/build.sh
+RUN chmod +x /opt/build.sh
 
 ENTRYPOINT [ "node" ]
 CMD ["server.js"]

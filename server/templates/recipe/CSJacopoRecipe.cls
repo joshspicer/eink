@@ -30,6 +30,8 @@
 %	REQUIRED PACKAGES AND MISC CONFIGURATIONS
 %----------------------------------------------------------------------------------------
 
+\usepackage[subtle]{savetrees} % Added by Josh.  Reduces margins and spacing to fit recipe on a single page more often.
+
 \usepackage[usenames, dvipsnames, svgnames, table]{xcolor} % Required for using preset color names or defining new ones
 
 \usepackage{etoolbox} % Required for conditional logic and easily changing commands
