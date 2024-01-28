@@ -5,7 +5,8 @@ set -ex
 FLAG="$1"
 JSON_DATA="$2" # Optional
 
-DESTINATION_PATH='/usr/src/app/static/image.bmp'
+BMP_DESTINATION_PATH='/usr/src/app/static/image.bmp'
+PNG_DESTINATION_PATH='/usr/src/app/static/image.png'
 INKPLATE_WIDTH=825
 INKPLATE_HEIGHT=1200
 
@@ -50,7 +51,7 @@ if [ "$FLAG" == "newspaper" ]; then
 
     pdflatex -interaction=nonstopmode /output/template.tex
     convert /output/template.pdf  -quality 100 -rotate -90 -depth 1 /output/output.bmp
-    cp /output/output.bmp $DESTINATION_PATH
+    cp /output/output.bmp $BMP_DESTINATION_PATH
 fi
 
 if [ "$FLAG" == "recipe" ]; then
@@ -69,11 +70,11 @@ if [ "$FLAG" == "recipe" ]; then
 
     # Convert to a png and resize to fit inkplate
     convert /output/template.pdf -resize ${INKPLATE_WIDTH}x${INKPLATE_HEIGHT} -quality 100 -rotate -90 /output/output.png
-    cp /output/output.png $DESTINATION_PATH
+    cp /output/output.png $PNG_DESTINATION_PATH
 
     # Convert another copy to bitmap
     convert /output/template.pdf  -quality 100 -rotate -90 -depth 1 /output/output.bmp
-    cp /output/output.bmp $DESTINATION_PATH
+    cp /output/output.bmp $BMP_DESTINATION_PATH
 
 fi
 
@@ -90,5 +91,5 @@ if [ "$FLAG" == "web" ]; then
     # Convert to bmp
     convert /output/target.$ext -rotate -90 -depth 1 /output/output.bmp
 
-    cp /output/output.bmp $DESTINATION_PATH
+    cp /output/output.bmp $BMP_DESTINATION_PATH
 fi
