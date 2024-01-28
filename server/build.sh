@@ -5,8 +5,8 @@ set -ex
 FLAG="$1"
 JSON_DATA="$2" # Optional
 
-BMP_DESTINATION_PATH='/usr/src/app/static/image.bmp'
-PNG_DESTINATION_PATH='/usr/src/app/static/image.png'
+BASE_DESINATION_PATH='/usr/src/app/static'
+BMP_DESTINATION_PATH="${BASE_DESINATION_PATH}/image.bmp"
 INKPLATE_WIDTH=825
 INKPLATE_HEIGHT=1200
 
@@ -68,13 +68,27 @@ if [ "$FLAG" == "recipe" ]; then
 
     pdflatex -interaction=nonstopmode /output/template.tex
 
-    # Convert to a png and resize to fit inkplate
-    convert /output/template.pdf -resize ${INKPLATE_WIDTH}x${INKPLATE_HEIGHT} -quality 100 -rotate -90 /output/output.png
-    cp /output/output.png $PNG_DESTINATION_PATH
+    # Png
+    convert /output/template.pdf -trim -quality 100 -rotate -90 /output/output-trimmed.png
+    cp /output/output-trimmed.png "${BASE_DESINATION_PATH}/image-trimmed.png"
 
-    # Convert another copy to bitmap
+    convert /output/template.pdf -quality 100 -rotate -90 /output/output.png
+    cp /output/output.png "${BASE_DESINATION_PATH}/image.png"
+
+    # Jpg
+    convert /output/template.pdf -trim -quality 100 -rotate -90 /output/output-trimmed.jpg
+    cp /output/output-trimmed.jpg "${BASE_DESINATION_PATH}/image-trimmed.jpg"
+
+    convert /output/template.pdf -quality 100 -rotate -90 /output/output.jpg
+    cp /output/output.jpg "${BASE_DESINATION_PATH}/image.jpg"
+
+    # Bmp
+    convert /output/template.pdf -trim -quality 100 -rotate -90 -depth 1 /output/output-trimmed.bmp
+    cp /output/output-trimmed.bmp "${BASE_DESINATION_PATH}/image-trimmed.bmp"
+
     convert /output/template.pdf  -quality 100 -rotate -90 -depth 1 /output/output.bmp
     cp /output/output.bmp $BMP_DESTINATION_PATH
+
 
 fi
 
