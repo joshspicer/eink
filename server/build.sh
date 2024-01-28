@@ -54,7 +54,14 @@ fi
 if [ "$FLAG" == "recipe" ]; then
     cp -r /templates/recipe/* /output
     
-    # TODO: Replacements
+    RECIPE_NAME=$(echo "$JSON_DATA" | jq -r '.mealQuery')
+
+    if [ -z "$RECIPE_NAME" ]; then
+        echo "ERR: No recipe name provided as mealQuery"
+        exit 1
+    fi
+
+    /output/queryAndReplace.sh "$RECIPE_NAME"
 
     pdflatex -interaction=nonstopmode /output/template.tex
     convert /output/template.pdf  -quality 100 -rotate -90 -depth 1 /output/output.bmp
