@@ -6,6 +6,8 @@ FLAG="$1"
 JSON_DATA="$2" # Optional
 
 DESTINATION_PATH='/usr/src/app/static/image.bmp'
+INKPLATE_WIDTH=825
+INKPLATE_HEIGHT=1200
 
 if [ -z "$FLAG" ]; then
     echo "ERR: No flag provided"
@@ -64,7 +66,8 @@ if [ "$FLAG" == "recipe" ]; then
     /output/queryAndReplace.sh "$RECIPE_NAME"
 
     pdflatex -interaction=nonstopmode /output/template.tex
-    convert /output/template.pdf  -quality 100 -rotate -90 -depth 1 /output/output.bmp
+    # Convert to bitmap and resize for inkplate
+    convert /output/template.pdf  -quality 100 -rotate -90 -depth 1 -resize $INKPLATE_WIDTHx$INKPLATE_HEIGHT /output/output.bmp
     cp /output/output.bmp $DESTINATION_PATH
 fi
 
