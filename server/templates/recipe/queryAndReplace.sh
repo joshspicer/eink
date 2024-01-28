@@ -29,7 +29,7 @@ fi
 
 # recipe=$(cat ./oneQuery.json)
 
-title=$(echo $recipe | jq '.title')
+title=$(echo $recipe | jq -r '.title')
 echo "[T] $title"
 
 INGREDIENTS_LATEX="" # \ingredient{1 tbsp olive oil}
