@@ -5,7 +5,7 @@
 ```bash
 $ docker build ./server -t eink
 
-$ docker run --rm -p 3000:3000 eink
+$ docker run --rm --env-file .env -p 3000:3000 eink
 
 Starting...
 Server listening on port 3000!
@@ -17,6 +17,16 @@ $ curl -X PATCH \
 
 $ wget localhost:3000/image.bmp
 ```
+
+### Environment variables
+
+#### Required
+
+None.
+
+#### Optional
+
+- `SPOONACULAR_API`: Spoonacular API key. (Required when `mode=recipe`).
 
 ## Client sketch
 

@@ -1,6 +1,6 @@
 FROM dpokidov/imagemagick:latest-bullseye
 
-WORKDIR /template
+WORKDIR /templates
 
 # Modified from https://github.com/sphinx-doc/sphinx-docker-images/blob/master/latexpdf/Dockerfile
 RUN apt-get update -y \
@@ -41,8 +41,8 @@ RUN python3 -m pip install --no-cache-dir -U pip
 RUN python3 -m pip install --no-cache-dir Sphinx==5.3.0 Pillow
 
 # Copy newspaper template over to workdir
-RUN rm -rf ./template
-ADD template .
+RUN rm -rf ./templates
+ADD templates .
 
 COPY build.sh /opt/build.sh
 RUN chmod +x /opt/build.sh

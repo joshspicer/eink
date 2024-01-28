@@ -1,0 +1,79 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Jacopo Recipe
+% LaTeX Template
+% Version 1.0 (February 15, 2022)
+%
+% This template originates from:
+% https://www.LaTeXTemplates.com
+%
+% Author:
+% Vel (vel@latextemplates.com)
+%
+% License:
+% CC BY-NC-SA 4.0 (https://creativecommons.org/licenses/by-nc-sa/4.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[
+	a4paper, % Paper size, use 'a4paper' for A4 (default) or 'letterpaper' for US letter (you may want to adjust margins afterwards)
+	14pt, % Default font size, available sizes are: 8pt, 9pt, 10pt, 11pt, 12pt, 14pt, 17pt and 20pt
+]{CSJacopoRecipe}
+
+%---------------------------------------------------------------------------------
+%	RECIPE INFORMATION
+%---------------------------------------------------------------------------------
+
+\recipetitle{%%%RECIPE_TITLE%%%} % Recipe title, will be made uppercase automatically
+
+\recipedescription{} % Recipe description, leave command empty (i.e. \recipedescription{}) if not required
+
+\recipeserves{} % Number of servings, leave command empty (i.e. \recipeserves{}) if not required
+\recipepreptime{} % Preparation time, leave command empty (i.e. \recipepreptime{}) if not required
+\recipecookingtime{} % Cooking time, leave command empty (i.e. \recipecookingtime{}) if not required
+\recipedifficulty{} % Difficulty, leave command empty (i.e. \recipedifficulty{}) if not required
+
+\extramethodinfo{} % Extra information, tips, variations, storage instructions, etc to appear under the methods, leave command empty (i.e. \extramethodinfo{}) if not required
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\columnratio{0.32, 0.68} % Set the relative widths of the ingredients and methods columns, change these values to adjust the width of each column
+
+\begin{paracol}{2} % Multi-column environment that automatically splits across pages
+
+%---------------------------------------------------------------------------------
+%	HEADER
+%---------------------------------------------------------------------------------
+
+\outputrecipeheader % Output the recipe header, automatically created using the information entered in the RECIPE INFORMATION block above
+
+%---------------------------------------------------------------------------------
+%	INGREDIENTS
+%---------------------------------------------------------------------------------
+
+% \ingredient{1 tbsp olive oil}
+
+\begin{recipeingredients}
+%%%INGREDIENT_POINTER%%%
+\end{recipeingredients}
+
+%---------------------------------------------------------------------------------
+%	METHODS
+%---------------------------------------------------------------------------------
+
+% \method{Heat oil and butter}
+
+\begin{recipemethods}
+%%%METHOD_POINTER%%%
+\end{recipemethods}
+
+%---------------------------------------------------------------------------------
+
+\end{paracol}
+
+\end{document}
