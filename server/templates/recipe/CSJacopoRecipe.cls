@@ -89,7 +89,7 @@
 %	TEXT STYLING COMMANDS
 %----------------------------------------------------------------------------------------
 
-\newcommand{\ingredient}[1]{{\textit{\small #1}}\par\vspace{0.01\textheight}} % Styles an individual recipe ingredient
+\newcommand{\ingredient}[1]{{\textit{\normalsize #1}}\par\vspace{0.01\textheight}} % Styles an individual recipe ingredient
 
 \newcommand{\method}[1]{\item \hspace{-3pt}{\large #1}} % Styles an individual recipe method
 
