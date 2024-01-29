@@ -79,12 +79,9 @@ if [ "$FLAG" == "recipe" ]; then
     convert /output/template.pdf -trim -quality 100 /output/output.jpg
     cp /output/output.jpg "${BASE_DESINATION_PATH}/image-trimmed.jpg"
 
-    # Native resolution
-    convert /output/template.pdf -quality 100 /output/output.jpg
-    cp /output/output.jpg "${BASE_DESINATION_PATH}/image.jpg"
-    # Resize to inkplate's dimensions
-    convert /output/output.jpg -resize "${INKPLATE_WIDTH}x${INKPLATE_HEIGHT}" /output/resized.jpg
-    cp /output/resized.jpg "${BASE_DESINATION_PATH}/image-resized.jpg"
+    convert /output/template.pdf -quality 100 /output/output.jpg  # Native resolution
+    convert /output/output.jpg -resize "${INKPLATE_WIDTH}x${INKPLATE_HEIGHT}" /output/resized.jpg  # Resize to Inkplate's dimensions
+    cp /output/resized.jpg "${BASE_DESINATION_PATH}/image.jpg"
 
     # Bmp
     convert /output/template.pdf -trim -quality 100 -depth 1 /output/output_4.bmp
